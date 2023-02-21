@@ -45,6 +45,9 @@ let main args =
         Uri "wss://relay.nostr.snblago.com"
         Uri "wss://nostr.web3infra.xyz"
         Uri "wss://nostr.mouton.dev"
+        Uri "wss://relay.damus.io"
+        Uri "wss://nostr.mutinywallet.com"
+        Uri "wss://nostr.developer.li"
     ]
     |> List.map (publishNote note)
     |> Async.Parallel
