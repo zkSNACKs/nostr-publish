@@ -14,7 +14,8 @@ let publishNote note relay =
     let pushToRelay = Monad.injectedWith ctx (Communication.sender ())
 
     async {
-        do! ws.ConnectAsync (relay, CancellationToken.None) |> Async.AwaitTask
+        use cts = new CancellationTokenSource(TimeSpan.FromSeconds 10)
+        do! ws.ConnectAsync (relay, cts.Token) |> Async.AwaitTask
         pushToRelay (Request.CMEvent note)
     }
 
