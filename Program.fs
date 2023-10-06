@@ -47,7 +47,6 @@ let main args =
         Uri "wss://nostr.mouton.dev"
         Uri "wss://relay.damus.io"
         Uri "wss://nostr.mutinywallet.com"
-        Uri "wss://nostr.developer.li"
     ]
     |> List.map (publishNote note)
     |> Async.Parallel
