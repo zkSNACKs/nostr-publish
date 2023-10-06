@@ -50,6 +50,7 @@ let main args =
         Uri "wss://nostr.mutinywallet.com"
     ]
     |> List.map (publishNote note)
+    |> List.map Async.Catch
     |> Async.Parallel
     |> Async.RunSynchronously
     |> ignore
