@@ -8,6 +8,9 @@ open NBitcoin.Secp256k1
 open Nostra
 open Nostra.Client
 
+let expiresInOneMonth (event : Event.UnsignedEvent) =
+    { event with Tags = ["expiration", [DateTime.Now.AddDays 30 |> Utils.toUnixTime |> string]] }
+
 let publishNote note relay =
     let ws = new ClientWebSocket()
     let ctx = Communication.buildContext ws Console.Out  
@@ -19,12 +22,11 @@ let publishNote note relay =
         pushToRelay (Request.CMEvent note)
     }
 
-
 [<EntryPoint>]
 let main args =
     let secret = args[0] |> Utils.fromHex |> ECPrivKey.Create 
     let msg = args[1]
-    let unsignedNote = Event.createNoteEvent msg
+    let unsignedNote = Event.createNoteEvent msg |> expiresInOneMonth
     let note = Event.sign secret unsignedNote
     
     [
